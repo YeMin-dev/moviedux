@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles.css";
 import MovieCard from "./MovieCard";
 import SearchBar from "./SearchBar";
+import FilterSlot from "./FilterSlot";
 
 export default function MoviesGrid() {
   const [movies, setMovies] = useState([]);
@@ -19,12 +20,12 @@ export default function MoviesGrid() {
     setSearchTerm(inputValue);
   };
 
-  const handleGenreChange = (e) => {
-    setGenre(e.target.value);
+  const handleGenreChange = (inputValue) => {
+    setGenre(inputValue);
   };
 
-  const handleRatingChange = (e) => {
-    setRating(e.target.value);
+  const handleRatingChange = (inputValue) => {
+    setRating(inputValue);
   };
 
   const matchGenre = (movie, genre) =>
@@ -60,34 +61,16 @@ export default function MoviesGrid() {
       <SearchBar handleSearchChange={handleSearchChange} />
 
       <div className="filter-bar">
-        <div className="filter-slot">
-          <label>Genre</label>
-          <select
-            className="filter-dropdown"
-            value={genre}
-            onChange={handleGenreChange}
-          >
-            <option>All Genres</option>
-            <option>Action</option>
-            <option>Drama</option>
-            <option>Fantasy</option>
-            <option>Horror</option>
-          </select>
-        </div>
-
-        <div className="filter-slot">
-          <label>Rating</label>
-          <select
-            className="filter-dropdown"
-            value={rating}
-            onChange={handleRatingChange}
-          >
-            <option>All</option>
-            <option>Good</option>
-            <option>Ok</option>
-            <option>Bad</option>
-          </select>
-        </div>
+        <FilterSlot
+          label="Genre"
+          optionList={["All Genres", "Action", "Drama", "Fantasy", "Horror"]}
+          handleFilterChange={handleGenreChange}
+        />
+        <FilterSlot
+          label="Rating"
+          optionList={["All", "Good", "Ok", "Bad"]}
+          handleFilterChange={handleRatingChange}
+        />
       </div>
 
       <div className="movies-grid">
